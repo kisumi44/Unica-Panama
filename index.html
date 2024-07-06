@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unica Panama</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onclick="closeMenu(event)" onload="checkLogin()">
+    <header>
+        <h1>Unica Panama</h1>
+        <button class="admin-button" onclick="toggleMenu(event)">Admin</button>
+    </header>
+    <main>
+        <div class="buttons">
+            <a href="suppliers.html" class="button">供应商</a>
+            <a href="customers.html" class="button">客户</a>
+            <a href="products.html" class="button">产品</a>
+            <a href="orders.html" class="button">订单</a>
+            <a href="accounts_receivable.html" class="button">应收帐款</a>
+            <a href="accounts_payable.html" class="button">应付帐款</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Unica Panama</p>
+    </footer>
+
+    <div id="adminMenu" class="admin-menu">
+        <a href="orders.html">订单</a>
+        <a href="revenue.html">营业额</a>
+        <a href="products.html">产品目录</a>
+        <a href="index.html">目录</a>
+    </div>
+
+    <script>
+        function toggleMenu(event) {
+            event.stopPropagation();
+            var menu = document.getElementById("adminMenu");
+            if (menu.classList.contains("show")) {
+                menu.classList.remove("show");
+            } else {
+                menu.classList.add("show");
+            }
+        }
+
+        function closeMenu(event) {
+            var menu = document.getElementById("adminMenu");
+            if (menu.classList.contains("show") && !event.target.matches('.admin-button')) {
+                menu.classList.remove("show");
+            }
+        }
+
+        function checkLogin() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
