@@ -6,10 +6,10 @@
     <title>Unica Panama</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body onclick="closeMenu(event)" onload="checkLogin()">
+<body>
     <header>
         <h1>Unica Panama</h1>
-        <button class="admin-button" onclick="toggleMenu(event)">Admin</button>
+        <button class="admin-button" onclick="toggleAdminMenu()">Admin</button>
     </header>
     <main>
         <div class="buttons">
@@ -26,36 +26,31 @@
     </footer>
 
     <div id="adminMenu" class="admin-menu">
-        <a href="orders.html">订单</a>
-        <a href="revenue.html">营业额</a>
-        <a href="products.html">产品目录</a>
-        <a href="index.html">目录</a>
+        <ul>
+            <li><a href="orders.html">订单</a></li>
+            <li><a href="revenue.html">营业额</a></li>
+            <li><a href="product_catalog.html">产品目录</a></li>
+            <li><a href="index.html">目录</a></li>
+        </ul>
     </div>
 
     <script>
-        function toggleMenu(event) {
-            event.stopPropagation();
-            var menu = document.getElementById("adminMenu");
-            if (menu.classList.contains("show")) {
-                menu.classList.remove("show");
+        function toggleAdminMenu() {
+            var adminMenu = document.getElementById('adminMenu');
+            if (adminMenu.style.display === 'block') {
+                adminMenu.style.display = 'none';
             } else {
-                menu.classList.add("show");
+                adminMenu.style.display = 'block';
             }
         }
 
-        function closeMenu(event) {
-            var menu = document.getElementById("adminMenu");
-            if (menu.classList.contains("show") && !event.target.matches('.admin-button')) {
-                menu.classList.remove("show");
+        document.addEventListener('click', function(event) {
+            var adminButton = document.querySelector('.admin-button');
+            var adminMenu = document.getElementById('adminMenu');
+            if (!adminButton.contains(event.target) && !adminMenu.contains(event.target)) {
+                adminMenu.style.display = 'none';
             }
-        }
-
-        function checkLogin() {
-            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            if (!isLoggedIn) {
-                window.location.href = 'login.html';
-            }
-        }
+        });
     </script>
 </body>
 </html>
