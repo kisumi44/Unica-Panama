@@ -1,0 +1,192 @@
+/* 通用样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: black; /* 全局字体颜色设置为黑色 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #ADD8E6; /* 浅蓝色 */
+    color: black; /* 黑色字体 */
+    padding: 0.5em;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    display: inline-block;
+    font-size: 1.5em; /* 缩小字体 */
+}
+
+.menu-button {
+    position: absolute;
+    left: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #FFB347; /* 更柔和的橙色 */
+    color: black;
+    border: none;
+    padding: 0.3em 0.8em; /* 缩小按钮大小 */
+    border-radius: 50%; /* 圆形按钮 */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+    background-color: #FFA07A; /* 更柔和的深橙色 */
+}
+
+.admin-button {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #FFB347; /* 更柔和的橙色 */
+    color: black;
+    border: none;
+    padding: 0.3em 0.8em; /* 缩小按钮大小 */
+    border-radius: 5px; /* 圆角矩形按钮 */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-button:hover {
+    background-color: #FFA07A; /* 更柔和的深橙色 */
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    width: 100%;
+    max-width: 600px;
+}
+
+.button {
+    background-color: #FFB347; /* 更柔和的橙色 */
+    color: black; /* 黑色字体 */
+    padding: 1em;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 1.2em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+    background-color: #FFA07A; /* 更柔和的深橙色 */
+    transform: translateY(-2px);
+}
+
+footer {
+    background-color: #ADD8E6; /* 浅蓝色 */
+    color: black; /* 黑色字体 */
+    text-align: center;
+    padding: 0.5em; /* 缩小字体 */
+    font-size: 0.8em; /* 缩小字体 */
+    position: relative;
+    width: 100%;
+    margin-top: auto; /* 确保footer在页面底部 */
+}
+
+/* Admin 菜单样式 */
+.admin-menu {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 1em;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+.admin-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.admin-menu ul li {
+    margin-bottom: 1em;
+}
+
+.admin-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.admin-menu ul li a:hover {
+    text-decoration: underline;
+}
+
+/* 登录页面样式 */
+.login-container {
+    background-color: white;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    margin: auto;
+}
+
+.login-container h1 {
+    margin-bottom: 1em;
+}
+
+.form-group {
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button {
+    background-color: #FFB347; /* 更柔和的橙色 */
+    color: black; /* 黑色字体 */
+    padding: 0.7em 1em;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 10px; /* 边角稍微圆一点 */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1em;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #FFA07A; /* 更柔和的深橙色 */
+}
