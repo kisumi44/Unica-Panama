@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unica Panama Warehouse Management</title>
+    <title>订单管理 - Unica Panama</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,7 +24,14 @@
         </ul>
     </nav>
     <main>
-        <p>欢迎来到Unica Panama仓库后台管理系统，请选择上方菜单进行操作。</p>
+        <section id="orders">
+            <h2>订单</h2>
+            <input type="text" id="order-search" placeholder="搜索订单">
+            <button onclick="searchOrder()">搜索</button>
+            <button onclick="addOrder()">新增订单</button>
+            <div id="order-list"></div>
+        </section>
     </main>
+    <script src="script.js"></script>
 </body>
 </html>

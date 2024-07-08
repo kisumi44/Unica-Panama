@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unica Panama Warehouse Management</title>
+    <title>供应商管理 - Unica Panama</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,7 +24,14 @@
         </ul>
     </nav>
     <main>
-        <p>欢迎来到Unica Panama仓库后台管理系统，请选择上方菜单进行操作。</p>
+        <section id="suppliers">
+            <h2>供应商</h2>
+            <input type="text" id="supplier-search" placeholder="搜索供应商">
+            <button onclick="searchSupplier()">搜索</button>
+            <button onclick="addSupplier()">新增供应商</button>
+            <div id="supplier-list"></div>
+        </section>
     </main>
+    <script src="script.js"></script>
 </body>
 </html>

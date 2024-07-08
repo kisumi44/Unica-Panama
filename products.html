@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品 - Unica Panama</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="title">Unica Panama</div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">主页</a></li>
+            <li><a href="products.html">产品</a></li>
+            <li><a href="customers.html">客户</a></li>
+            <li><a href="suppliers.html">供应商</a></li>
+            <li><a href="orders.html">订单</a></li>
+            <li><a href="accounts_receivable.html">应收帐款</a></li>
+            <li><a href="accounts_payable.html">应付账款</a></li>
+            <li><a href="revenue.html">营业额</a></li>
+            <li><a href="delivery.html">交货</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="products">
+            <div class="section-header">
+                <h2>产品</h2>
+                <div class="search-container">
+                    <input type="text" id="product-search" placeholder="搜索产品...">
+                    <button class="search-button" onclick="searchProduct()">搜索</button>
+                </div>
+                <button class="add-button" onclick="openAddModal()">新增产品</button>
+            </div>
+            <div class="product-grid" id="product-grid">
+                <div class="product-card" id="product-1">
+                    <h3>60lb Arroz Precocido 炒饭米</h3>
+                    <p>价格: 45.00</p>
+                    <button class="edit-button" onclick="openEditModal('60lb Arroz Precocido 炒饭米', '调味料', '30.00', '45.00')">编辑</button>
+                    <button class="delete-button" onclick="deleteProduct('product-1')">删除</button>
+                </div>
+                <div class="product-card" id="product-2">
+                    <h3>Arroz Pelin 2 Lb/50uni 特级米</h3>
+                    <p>价格: 34.00</p>
+                    <button class="edit-button" onclick="openEditModal('Arroz Pelin 2 Lb/50uni 特级米', '调味料', '20.00', '34.00')">编辑</button>
+                    <button class="delete-button" onclick="deleteProduct('product-2')">删除</button>
+                </div>
+                <!-- 继续添加更多产品 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 编辑产品模态窗口 -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>编辑产品</h2>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="productName">产品:</label>
+                    <input type="text" id="productName" name="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">品类:</label>
+                    <select id="productCategory" name="productCategory" required>
+                        <option value="调味料">调味料</option>
+                        <option value="餐具-清洁品">餐具-清洁品</option>
+                        <option value="塑料袋">塑料袋</option>
+                        <option value="饭盒-铝盘-碟">饭盒-铝盘-碟</option>
+                        <option value="调味酱-罐头">调味酱-罐头</option>
+                        <option value="饮品">饮品</option>
+                        <option value="杯-盖">杯-盖</option>
+                        <option value="米-油-糖">米-油-糖</option>
+                        <option value="冷冻食品">冷冻食品</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productCostPrice">成本:</label>
+                    <input type="number" step="0.01" id="productCostPrice" name="productCostPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">价格:</label>
+                    <input type="number" step="0.01" id="productPrice" name="productPrice" required>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="cancel-button" onclick="closeEditModal()">取消</button>
+                    <button type="button" class="save-button" onclick="saveProduct()">保存</button>
+                </div>
+                <div id="editFeedback" class="feedback"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 新增产品模态窗口 -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddModal()">&times;</span>
+            <h2>新增产品</h2>
+            <form id="addForm">
+                <div class="form-group">
+                    <label for="newProductName">产品:</label>
+                    <input type="text" id="newProductName" name="newProductName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductCategory">品类:</label>
+                    <select id="newProductCategory" name="newProductCategory" required>
+                        <option value="调味料">调味料</option>
+                        <option value="餐具-清洁品">餐具-清洁品</option>
+                        <option value="塑料袋">塑料袋</option>
+                        <option value="饭盒-铝盘-碟">饭盒-铝盘-碟</option>
+                        <option value="调味酱-罐头">调味酱-罐头</option>
+                        <option value="饮品">饮品</option>
+                        <option value="杯-盖">杯-盖</option>
+                        <option value="米-油-糖">米-油-糖</option>
+                        <option value="冷冻食品">冷冻食品</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newProductCostPrice">成本:</label>
+                    <input type="number" step="0.01" id="newProductCostPrice" name="newProductCostPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductPrice">价格:</label>
+                    <input type="number" step="0.01" id="newProductPrice" name="newProductPrice" required>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="cancel-button" onclick="closeAddModal()">取消</button>
+                    <button type="button" class="save-button" onclick="addProduct()">保存</button>
+                </div>
+                <div id="addFeedback" class="feedback"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
