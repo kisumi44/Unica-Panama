@@ -23,9 +23,23 @@ function addProduct() {
     const costPrice = document.getElementById('newProductCostPrice').value;
     const price = document.getElementById('newProductPrice').value;
 
-    console.log('Adding new product:', name, category, costPrice, price);
-    // 处理新增产品逻辑，如发送到服务器或更新页面
+    // 创建新的产品卡片
+    const productGrid = document.getElementById('product-grid');
+    const newProductId = `product-${Date.now()}`;
+    const newProductCard = document.createElement('div');
+    newProductCard.classList.add('product-card');
+    newProductCard.id = newProductId;
 
+    newProductCard.innerHTML = `
+        <h3>${name}</h3>
+        <p>价格: ${price}</p>
+        <button class="edit-button" onclick="openEditModal('${name}', '${category}', '${costPrice}', '${price}')">编辑</button>
+        <button class="delete-button" onclick="deleteProduct('${newProductId}')">删除</button>
+    `;
+
+    productGrid.appendChild(newProductCard);
+
+    console.log('Adding new product:', name, category, costPrice, price);
     // 清空表单并关闭模态窗口
     document.getElementById('addForm').reset();
     closeAddModal();
