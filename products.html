@@ -31,24 +31,44 @@
                     <input type="text" id="product-search" placeholder="搜索产品...">
                     <button class="search-button" onclick="searchProduct()">搜索</button>
                 </div>
+                <div class="filter-sort">
+                    <select id="category-filter" onchange="filterProducts()">
+                        <option value="">所有品类</option>
+                        <option value="调味料">调味料</option>
+                        <option value="餐具-清洁品">餐具-清洁品</option>
+                        <option value="塑料袋">塑料袋</option>
+                        <option value="饭盒-铝盘-碟">饭盒-铝盘-碟</option>
+                        <option value="调味酱-罐头">调味酱-罐头</option>
+                        <option value="饮品">饮品</option>
+                        <option value="杯-盖">杯-盖</option>
+                        <option value="米-油-糖">米-油-糖</option>
+                        <option value="冷冻食品">冷冻食品</option>
+                    </select>
+                    <select id="sort-products" onchange="sortProducts()">
+                        <option value="name-asc">名称升序</option>
+                        <option value="name-desc">名称降序</option>
+                        <option value="price-asc">价格升序</option>
+                        <option value="price-desc">价格降序</option>
+                    </select>
+                </div>
                 <button class="add-button" onclick="openAddModal()">新增产品</button>
             </div>
             <div class="product-grid" id="product-grid">
+                <!-- 示例产品卡片 -->
                 <div class="product-card" id="product-1">
+                    <img src="default.jpg" alt="60lb Arroz Precocido 炒饭米">
                     <h3>60lb Arroz Precocido 炒饭米</h3>
                     <p>品类: 调味料</p>
                     <p>价格: 45.00</p>
                     <button class="edit-button" onclick="openEditModal('60lb Arroz Precocido 炒饭米', '调味料', '30.00', '45.00', 'product-1')">编辑</button>
                     <button class="delete-button" onclick="deleteProduct('product-1')">删除</button>
                 </div>
-                <div class="product-card" id="product-2">
-                    <h3>Arroz Pelin 2 Lb/50uni 特级米</h3>
-                    <p>品类: 调味料</p>
-                    <p>价格: 34.00</p>
-                    <button class="edit-button" onclick="openEditModal('Arroz Pelin 2 Lb/50uni 特级米', '调味料', '20.00', '34.00', 'product-2')">编辑</button>
-                    <button class="delete-button" onclick="deleteProduct('product-2')">删除</button>
-                </div>
-                <!-- 继续添加更多产品 -->
+                <!-- 更多产品卡片 -->
+            </div>
+            <div class="pagination">
+                <button class="pagination-button" onclick="previousPage()">上一页</button>
+                <span id="page-number">1</span>
+                <button class="pagination-button" onclick="nextPage()">下一页</button>
             </div>
         </section>
     </main>
@@ -84,6 +104,10 @@
                 <div class="form-group">
                     <label for="productPrice">价格:</label>
                     <input type="number" step="0.01" id="productPrice" name="productPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">图片:</label>
+                    <input type="file" id="productImage" name="productImage" accept="image/*">
                 </div>
                 <div class="button-group">
                     <button type="button" class="cancel-button" onclick="closeEditModal()">取消</button>
@@ -125,6 +149,10 @@
                 <div class="form-group">
                     <label for="newProductPrice">价格:</label>
                     <input type="number" step="0.01" id="newProductPrice" name="newProductPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="newProductImage">图片:</label>
+                    <input type="file" id="newProductImage" name="newProductImage" accept="image/*">
                 </div>
                 <div class="button-group">
                     <button type="button" class="cancel-button" onclick="closeAddModal()">取消</button>
