@@ -4,10 +4,12 @@ document.getElementById('product-search').addEventListener('keydown', function(e
     }
 });
 
+let products = {};
+
 function searchProduct() {
     const searchQuery = document.getElementById('product-search').value.toLowerCase();
-    const products = document.querySelectorAll('.product-card');
-    products.forEach(product => {
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(product => {
         const productName = product.querySelector('h3').textContent.toLowerCase();
         if (productName.includes(searchQuery)) {
             product.style.display = 'block';
@@ -19,8 +21,8 @@ function searchProduct() {
 
 function filterProducts() {
     const categoryFilter = document.getElementById('category-filter').value;
-    const products = document.querySelectorAll('.product-card');
-    products.forEach(product => {
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(product => {
         const productCategory = product.querySelector('p:nth-child(2)').textContent.split(': ')[1];
         if (categoryFilter === '' || productCategory === categoryFilter) {
             product.style.display = 'block';
@@ -33,9 +35,9 @@ function filterProducts() {
 function sortProducts() {
     const sortOption = document.getElementById('sort-products').value;
     const productGrid = document.getElementById('product-grid');
-    const products = Array.from(productGrid.children);
+    const productCards = Array.from(productGrid.children);
 
-    products.sort((a, b) => {
+    productCards.sort((a, b) => {
         const nameA = a.querySelector('h3').textContent;
         const nameB = b.querySelector('h3').textContent;
         const priceA = parseFloat(a.querySelector('p:nth-child(3)').textContent.split(': ')[1]);
@@ -48,7 +50,7 @@ function sortProducts() {
     });
 
     productGrid.innerHTML = '';
-    products.forEach(product => productGrid.appendChild(product));
+    productCards.forEach(product => productGrid.appendChild(product));
 }
 
 function addProduct() {
@@ -73,11 +75,13 @@ function addProduct() {
             <h3>${name}</h3>
             <p>品类: ${category}</p>
             <p>价格: ${price}</p>
-            <button class="edit-button" onclick="openEditModal('${name}', '${category}', '${costPrice}', '${price}', '${newProductId}', '${imageUrl}')">编辑</button>
+            <button class="edit-button" onclick="openEditModal('${newProductId}')">编辑</button>
             <button class="delete-button" onclick="deleteProduct('${newProductId}')">删除</button>
         `;
 
         productGrid.appendChild(newProductCard);
+
+        products[newProductId] = { name, category, costPrice, price, imageUrl };
 
         document.getElementById('addForm').reset();
         closeAddModal();
@@ -87,6 +91,7 @@ function addProduct() {
     if (imageFile) {
         reader.readAsDataURL(imageFile);
     } else {
+        const imageUrl = 'default.jpg';
         const productGrid = document.getElementById('product-grid');
         const newProductId = `product-${Date.now()}`;
         const newProductCard = document.createElement('div');
@@ -94,15 +99,17 @@ function addProduct() {
         newProductCard.id = newProductId;
 
         newProductCard.innerHTML = `
-            <img src="default.jpg" alt="${name}">
+            <img src="${imageUrl}" alt="${name}">
             <h3>${name}</h3>
             <p>品类: ${category}</p>
             <p>价格: ${price}</p>
-            <button class="edit-button" onclick="openEditModal('${name}', '${category}', '${costPrice}', '${price}', '${newProductId}', 'default.jpg')">编辑</button>
+            <button class="edit-button" onclick="openEditModal('${newProductId}')">编辑</button>
             <button class="delete-button" onclick="deleteProduct('${newProductId}')">删除</button>
         `;
 
         productGrid.appendChild(newProductCard);
+
+        products[newProductId] = { name, category, costPrice, price, imageUrl };
 
         document.getElementById('addForm').reset();
         closeAddModal();
@@ -110,12 +117,13 @@ function addProduct() {
     }
 }
 
-function openEditModal(name, category, costPrice, price, productId, imageUrl) {
-    document.getElementById('productName').value = name;
-    document.getElementById('productCategory').value = category;
-    document.getElementById('productCostPrice').value = costPrice;
-    document.getElementById('productPrice').value = price;
-    document.getElementById('productImage').dataset.imageUrl = imageUrl;
+function openEditModal(productId) {
+    const product = products[productId];
+    document.getElementById('productName').value = product.name;
+    document.getElementById('productCategory').value = product.category;
+    document.getElementById('productCostPrice').value = product.costPrice;
+    document.getElementById('productPrice').value = product.price;
+    document.getElementById('productImage').dataset.imageUrl = product.imageUrl;
     document.getElementById('editModal').dataset.productId = productId;
     document.getElementById('editModal').style.display = 'block';
 }
@@ -143,7 +151,8 @@ function saveProduct() {
         productCard.querySelector('p:nth-child(2)').textContent = `品类: ${category}`;
         productCard.querySelector('p:nth-child(3)').textContent = `价格: ${price}`;
 
-        openEditModal(name, category, costPrice, price, productId, imageUrl);
+        // 更新全局产品数据
+        products[productId] = { name, category, costPrice, price, imageUrl };
 
         document.getElementById('editForm').reset();
         closeEditModal();
@@ -159,7 +168,8 @@ function saveProduct() {
         productCard.querySelector('p:nth-child(2)').textContent = `品类: ${category}`;
         productCard.querySelector('p:nth-child(3)').textContent = `价格: ${price}`;
 
-        openEditModal(name, category, costPrice, price, productId, currentImageUrl);
+        // 更新全局产品数据
+        products[productId] = { name, category, costPrice, price, imageUrl: currentImageUrl };
 
         document.getElementById('editForm').reset();
         closeEditModal();
@@ -172,6 +182,7 @@ function deleteProduct(productId) {
         const productElement = document.getElementById(productId);
         if (productElement) {
             productElement.remove();
+            delete products[productId];
             showFeedback('addFeedback', '产品删除成功', 'success');
         } else {
             showFeedback('addFeedback', '产品删除失败', 'error');
