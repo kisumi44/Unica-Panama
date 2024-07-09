@@ -23,7 +23,7 @@ function filterProducts() {
     const categoryFilter = document.getElementById('category-filter').value;
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach(product => {
-        const productCategory = product.querySelector('p:nth-child(2)').textContent.split(': ')[1];
+        const productCategory = product.querySelector('p:nth-child(3)').textContent.split(': ')[1];
         if (categoryFilter === '' || productCategory === categoryFilter) {
             product.style.display = 'block';
         } else {
@@ -40,8 +40,8 @@ function sortProducts() {
     productCards.sort((a, b) => {
         const nameA = a.querySelector('h3').textContent;
         const nameB = b.querySelector('h3').textContent;
-        const priceA = parseFloat(a.querySelector('p:nth-child(3)').textContent.split(': ')[1]);
-        const priceB = parseFloat(b.querySelector('p:nth-child(3)').textContent.split(': ')[1]);
+        const priceA = parseFloat(a.querySelector('p:nth-child(4)').textContent.split(': ')[1]);
+        const priceB = parseFloat(b.querySelector('p:nth-child(4)').textContent.split(': ')[1]);
 
         if (sortOption === 'name-asc') return nameA.localeCompare(nameB);
         if (sortOption === 'name-desc') return nameB.localeCompare(nameA);
@@ -71,7 +71,7 @@ function addProduct() {
         newProductCard.id = newProductId;
 
         newProductCard.innerHTML = `
-            <img src="${imageUrl}" alt="${name}">
+            <img src="${imageUrl}" alt="产品图片">
             <h3>${name}</h3>
             <p>品类: ${category}</p>
             <p>价格: ${price}</p>
@@ -99,7 +99,7 @@ function addProduct() {
         newProductCard.id = newProductId;
 
         newProductCard.innerHTML = `
-            <img src="${imageUrl}" alt="${name}">
+            <img src="${imageUrl}" alt="产品图片">
             <h3>${name}</h3>
             <p>品类: ${category}</p>
             <p>价格: ${price}</p>
@@ -132,6 +132,16 @@ function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }
 
+function updateProductCard(productId) {
+    const productCard = document.getElementById(productId);
+    const product = products[productId];
+
+    productCard.querySelector('img').src = product.imageUrl;
+    productCard.querySelector('h3').textContent = product.name;
+    productCard.querySelector('p:nth-child(3)').textContent = `品类: ${product.category}`;
+    productCard.querySelector('p:nth-child(4)').textContent = `价格: ${product.price}`;
+}
+
 function saveProduct() {
     const name = document.getElementById('productName').value;
     const category = document.getElementById('productCategory').value;
@@ -145,14 +155,11 @@ function saveProduct() {
     reader.onload = function(event) {
         const imageUrl = event.target.result;
 
-        const productCard = document.getElementById(productId);
-        productCard.querySelector('img').src = imageUrl;
-        productCard.querySelector('h3').textContent = name;
-        productCard.querySelector('p:nth-child(2)').textContent = `品类: ${category}`;
-        productCard.querySelector('p:nth-child(3)').textContent = `价格: ${price}`;
-
         // 更新全局产品数据
         products[productId] = { name, category, costPrice, price, imageUrl };
+
+        // 更新产品卡片
+        updateProductCard(productId);
 
         document.getElementById('editForm').reset();
         closeEditModal();
@@ -162,14 +169,11 @@ function saveProduct() {
     if (imageFile) {
         reader.readAsDataURL(imageFile);
     } else {
-        const productCard = document.getElementById(productId);
-        productCard.querySelector('img').src = currentImageUrl;
-        productCard.querySelector('h3').textContent = name;
-        productCard.querySelector('p:nth-child(2)').textContent = `品类: ${category}`;
-        productCard.querySelector('p:nth-child(3)').textContent = `价格: ${price}`;
-
         // 更新全局产品数据
         products[productId] = { name, category, costPrice, price, imageUrl: currentImageUrl };
+
+        // 更新产品卡片
+        updateProductCard(productId);
 
         document.getElementById('editForm').reset();
         closeEditModal();
