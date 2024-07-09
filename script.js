@@ -32,8 +32,9 @@ function addProduct() {
 
     newProductCard.innerHTML = `
         <h3>${name}</h3>
+        <p>品类: ${category}</p>
         <p>价格: ${price}</p>
-        <button class="edit-button" onclick="openEditModal('${name}', '${category}', '${costPrice}', '${price}')">编辑</button>
+        <button class="edit-button" onclick="openEditModal('${name}', '${category}', '${costPrice}', '${price}', '${newProductId}')">编辑</button>
         <button class="delete-button" onclick="deleteProduct('${newProductId}')">删除</button>
     `;
 
@@ -104,11 +105,12 @@ function addDelivery() {
 }
 
 // 编辑功能相关代码
-function openEditModal(name, category, costPrice, price) {
+function openEditModal(name, category, costPrice, price, productId) {
     document.getElementById('productName').value = name;
     document.getElementById('productCategory').value = category;
     document.getElementById('productCostPrice').value = costPrice;
     document.getElementById('productPrice').value = price;
+    document.getElementById('editModal').dataset.productId = productId;
     document.getElementById('editModal').style.display = 'block';
 }
 
@@ -122,9 +124,20 @@ function saveProduct() {
     const category = document.getElementById('productCategory').value;
     const costPrice = document.getElementById('productCostPrice').value;
     const price = document.getElementById('productPrice').value;
+    const productId = document.getElementById('editModal').dataset.productId;
 
     console.log('Saving product:', name, category, costPrice, price);
-    // 处理保存逻辑，如发送到服务器或更新页面
+    // 更新产品卡片
+    const productCard = document.getElementById(productId);
+    productCard.querySelector('h3').textContent = name;
+    productCard.querySelector('p:nth-child(2)').textContent = `品类: ${category}`;
+    productCard.querySelector('p:nth-child(3)').textContent = `价格: ${price}`;
+
+    // 更新编辑模态窗口中的信息
+    document.getElementById('productName').value = name;
+    document.getElementById('productCategory').value = category;
+    document.getElementById('productCostPrice').value = costPrice;
+    document.getElementById('productPrice').value = price;
 
     // 清空表单并关闭模态窗口
     document.getElementById('editForm').reset();
